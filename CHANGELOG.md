@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.0.0 - 2026-06-21
+## v0.1.0 - 2026-06-21
 
 Initial desktop release of Art-Net Config.
 

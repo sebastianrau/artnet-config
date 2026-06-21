@@ -1,6 +1,6 @@
 # Release Checklist
 
-Current release: `v1.0.0`
+Current release: `v0.1.0`
 
 ## Build Artifacts
 
@@ -27,9 +27,9 @@ release/Art-Net-Config-linux-raspberry-arm.tar.gz
 After committing the release changes:
 
 ```bash
-git tag -a v1.0.0 -m "Art-Net Config v1.0.0"
-git push origin main
-git push origin v1.0.0
+git tag -a v0.1.0 -m "Art-Net Config v0.1.0"
+git push origin master
+git push origin v0.1.0
 ```
 
 ## GitHub Release Notes
@@ -37,7 +37,7 @@ git push origin v1.0.0
 Title:
 
 ```text
-Art-Net Config v1.0.0
+Art-Net Config v0.1.0
 ```
 
 Body:
