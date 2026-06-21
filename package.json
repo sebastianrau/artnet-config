@@ -1,0 +1,72 @@
+{
+  "name": "artnet-config",
+  "version": "1.0.0",
+  "description": "Art-Net Device Configuration Tool",
+  "main": "electron/main.js",
+  "bin": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "gui": "electron .",
+    "build": "electron-builder",
+    "build:mac": "electron-builder --mac dmg",
+    "build:mac:dir": "electron-builder --mac dir",
+    "build:win": "electron-builder --win nsis",
+    "build:linux": "electron-builder --linux AppImage",
+    "build:cli": "pkg .",
+    "build:cli:mac": "pkg . --targets node22-macos-arm64 --output dist/artnet-config",
+    "build:cli:mac:x64": "pkg . --targets node22-macos-x64 --output dist/artnet-config",
+    "build:cli:win": "pkg . --targets node22-win-x64 --output dist/artnet-config.exe",
+    "build:cli:linux": "pkg . --targets node22-linux-x64 --output dist/artnet-config"
+  },
+  "build": {
+    "appId": "com.artnet.config",
+    "productName": "Art-Net Config",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "server/**/*",
+      "public/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility"
+    }
+  },
+  "pkg": {
+    "assets": [
+      "public/**/*"
+    ],
+    "targets": [
+      "node22-macos-arm64",
+      "node22-win-x64",
+      "node22-linux-x64"
+    ],
+    "outputPath": "dist"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "@yao-pkg/pkg": "^6.20.0",
+    "electron": "^42.4.1",
+    "electron-builder": "^26.15.3"
+  }
+}
