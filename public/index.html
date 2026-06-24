@@ -12,7 +12,7 @@
     <h1>🎭 Art-Net Configuration</h1>
     <div class="header-actions">
       <span id="connection-status" class="status disconnected">Disconnected</span>
-      <button id="refresh-btn" class="btn-icon" title="Refresh">🔄</button>
+      <button id="refresh-btn" class="btn-icon" title="Refresh"><span class="refresh-glyph">🔄</span></button>
     </div>
   </header>
 
@@ -29,88 +29,105 @@
 
       <div id="device-panel" class="hidden">
         <!-- Device Info -->
-        <div class="panel">
+        <div class="panel panel-info">
           <h3>📋 Device Info</h3>
           <div class="info-grid" id="device-info"></div>
           <div class="panel-actions">
             <button id="identify-btn" class="btn">🔦 Identify</button>
-            <button id="refresh-device-btn" class="btn">🔄 Refresh</button>
+            <button id="refresh-device-btn" class="btn"><span class="refresh-glyph">🔄</span> Refresh</button>
           </div>
         </div>
 
-        <!-- Name Settings -->
-        <div class="panel">
-          <h3>✏️ Names</h3>
-          <div class="form-group">
-            <label for="short-name">Short Name (max 17 chars)</label>
-            <input type="text" id="short-name" maxlength="17">
-          </div>
-          <div class="form-group">
-            <label for="long-name">Long Name (max 63 chars)</label>
-            <input type="text" id="long-name" maxlength="63">
-          </div>
-          <button id="save-names-btn" class="btn btn-primary">Save Names</button>
-        </div>
-
-        <!-- Addressing Settings -->
-        <div class="panel">
-          <h3>🌐 Art-Net Addressing</h3>
-          <div class="form-group">
-            <label for="net-switch">Net - shared by all ports (0-127)</label>
-            <input type="number" id="net-switch" min="0" max="127">
-          </div>
-          <div class="form-group">
-            <label for="sub-switch">Subnet - shared by all ports (0-15)</label>
-            <input type="number" id="sub-switch" min="0" max="15">
-          </div>
-          
-          <h4>Per-Port Universe and Direction</h4>
-          <div class="port-config" id="port-config"></div>
-          
-          <button id="save-universe-btn" class="btn btn-primary">Save Addressing</button>
-        </div>
-
-        <!-- Merge Mode -->
-        <div class="panel">
-          <h3>🔀 Merge Mode</h3>
-          <div class="merge-config" id="merge-config"></div>
-        </div>
-
-        <!-- IP Configuration -->
-        <div class="panel">
-          <h3>🌍 IP Configuration</h3>
-          <div class="form-group">
-            <label>
-              <input type="checkbox" id="dhcp-enabled">
-              DHCP Enabled
-            </label>
-          </div>
-          <div id="static-ip-config">
-            <div class="form-group">
-              <label for="ip-address">IP Address</label>
-              <input type="text" id="ip-address" placeholder="2.0.0.1">
+        <div class="half-panels">
+          <div class="panel-column">
+            <!-- Addressing Settings -->
+            <div class="panel panel-addressing">
+              <h3>🌐 Art-Net Addressing</h3>
+              <div class="form-group">
+                <label for="net-switch">Net - shared by all ports (0-127)</label>
+                <input type="number" id="net-switch" min="0" max="127">
+              </div>
+              <div class="form-group">
+                <label for="sub-switch">Subnet - shared by all ports (0-15)</label>
+                <input type="number" id="sub-switch" min="0" max="15">
+              </div>
+              
+              <h4>Per-Port Universe and Direction</h4>
+              <div class="port-config" id="port-config"></div>
+              
+              <button id="save-universe-btn" class="btn btn-primary">Save Addressing</button>
             </div>
-            <div class="form-group">
-              <label for="subnet-mask">Subnet Mask</label>
-              <input type="text" id="subnet-mask" placeholder="255.0.0.0">
+
+            <!-- Merge Mode -->
+            <div class="panel panel-merge">
+              <h3>🔀 Merge Mode</h3>
+              <div class="merge-config" id="merge-config"></div>
             </div>
-            <div class="form-group">
-              <label for="gateway">Gateway</label>
-              <input type="text" id="gateway" placeholder="2.0.0.1">
+
+            <!-- Advanced Commands -->
+            <div class="panel panel-advanced">
+              <h3>⚙️ Advanced</h3>
+              <div class="panel-actions">
+                <button id="cancel-merge-btn" class="btn">Cancel Merge</button>
+                <button id="reset-counters-btn" class="btn">Reset Counters</button>
+                <button id="led-mute-btn" class="btn">Mute LEDs</button>
+                <button id="led-normal-btn" class="btn">Normal LEDs</button>
+              </div>
             </div>
           </div>
-          <div class="panel-actions">
-            <button id="save-ip-btn" class="btn btn-primary">Save IP Settings</button>
-            <button id="reset-ip-btn" class="btn btn-danger">Reset to Defaults</button>
+
+          <div class="panel-column">
+            <!-- Name Settings -->
+            <div class="panel panel-names">
+              <h3>✏️ Names</h3>
+              <div class="form-group">
+                <label for="short-name">Short Name (max 17 chars)</label>
+                <input type="text" id="short-name" maxlength="17">
+              </div>
+              <div class="form-group">
+                <label for="long-name">Long Name (max 63 chars)</label>
+                <input type="text" id="long-name" maxlength="63">
+              </div>
+              <button id="save-names-btn" class="btn btn-primary">Save Names</button>
+            </div>
+
+            <!-- IP Configuration -->
+            <div class="panel panel-ip">
+              <h3>🌍 IP Configuration</h3>
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="dhcp-enabled">
+                  DHCP Enabled
+                </label>
+              </div>
+              <div id="static-ip-config">
+                <div class="form-group">
+                  <label for="ip-address">IP Address</label>
+                  <input type="text" id="ip-address" placeholder="2.0.0.1">
+                </div>
+                <div class="form-group">
+                  <label for="subnet-mask">Subnet Mask</label>
+                  <input type="text" id="subnet-mask" placeholder="255.0.0.0">
+                </div>
+                <div class="form-group">
+                  <label for="gateway">Gateway</label>
+                  <input type="text" id="gateway" placeholder="2.0.0.1">
+                </div>
+              </div>
+              <div class="panel-actions">
+                <button id="save-ip-btn" class="btn btn-primary">Save IP Settings</button>
+                <button id="reset-ip-btn" class="btn btn-danger">Reset to Defaults</button>
+              </div>
+            </div>
+
           </div>
         </div>
 
         <!-- DMX Test -->
-        <div class="panel">
+        <div class="panel panel-dmx">
           <h3>🎚️ DMX Test Output</h3>
-          <div class="form-group">
-            <label for="test-universe">Test Universe (within selected Net/Subnet)</label>
-            <input type="number" id="test-universe" min="0" max="15" value="0">
+          <div class="dmx-targets" id="dmx-targets">
+            <div class="empty-state">Select a device to choose a port target</div>
           </div>
           <div class="dmx-sliders" id="dmx-sliders"></div>
           <div class="panel-actions">
@@ -119,16 +136,6 @@
           </div>
         </div>
 
-        <!-- Advanced Commands -->
-        <div class="panel">
-          <h3>⚙️ Advanced</h3>
-          <div class="panel-actions">
-            <button id="cancel-merge-btn" class="btn">Cancel Merge</button>
-            <button id="reset-counters-btn" class="btn">Reset Counters</button>
-            <button id="led-mute-btn" class="btn">Mute LEDs</button>
-            <button id="led-normal-btn" class="btn">Normal LEDs</button>
-          </div>
-        </div>
       </div>
     </section>
   </main>
