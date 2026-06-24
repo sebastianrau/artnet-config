@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.2.0 - 2026-06-24
+
+### Added
+
+- Display global Art-Net universes in the device list and port configuration.
+- Add per-port DMX test target buttons based on the selected device ports.
+- Add visible refresh feedback with a spinning refresh indicator.
+- Add `make release` to build release archives and create a GitHub release with `gh`.
+
+### Changed
+
+- Reworked the device detail layout into a more compact two-column dashboard.
+- Replaced the manual DMX test universe input with selectable device port targets.
+- Updated device-list universe badges to show `U NNN` as blue chips.
+- Refreshing device details now updates input fields only after an explicit refresh action.
+
+### Fixed
+
+- Update the device list immediately after saving addressing settings.
+- Avoid empty Merge Mode panels by showing a no-output-ports message.
+- Make device and port rendering more defensive when Art-Net replies omit optional fields.
+- Improve alignment of port direction controls with universe inputs.
+
 ## v0.1.0 - 2026-06-21
 
 Initial desktop release of Art-Net Config.
