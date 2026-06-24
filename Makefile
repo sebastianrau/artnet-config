@@ -2,6 +2,11 @@ NPM ?= npm
 ELECTRON_BUILDER ?= npx electron-builder
 APP_NAME ?= Art-Net-Config
 OUT_DIR ?= release
+VERSION := $(shell node -p "require('./package.json').version")
+TAG ?= v$(VERSION)
+RELEASE_TITLE ?= Art-Net Config $(TAG)
+RELEASE_NOTES ?= RELEASE.md
+GH ?= gh
 
 .PHONY: help install \
 	build-mac-amd64 build-mac-arm64 \
@@ -11,7 +16,7 @@ OUT_DIR ?= release
 	archive-mac-amd64 archive-mac-arm64 \
 	archive-win-amd64 archive-win-arm64 \
 	archive-linux-amd64 archive-linux-arm64 archive-linux-raspberry-arm \
-	archive-all clean
+	archive-all release clean
 
 help:
 	@echo "Electron build targets:"
@@ -27,6 +32,7 @@ help:
 	@echo "  make build-all-arm64            Build macOS, Windows, Linux arm64"
 	@echo "  make build-all                  Build all Electron targets"
 	@echo "  make archive-all                Build and archive all targets for GitHub upload"
+	@echo "  make release                    Build archives and create GitHub release for package.json version tag"
 	@echo "  make clean                      Remove Electron build artifacts"
 
 install:
@@ -104,6 +110,20 @@ archive-linux-raspberry-arm: build-linux-raspberry-arm
 	cd "$(OUT_DIR)" && tar -czf "$(APP_NAME)-linux-raspberry-arm.tar.gz" "$(APP_NAME)-linux-raspberry-arm"
 
 archive-all: archive-mac-amd64 archive-mac-arm64 archive-win-amd64 archive-win-arm64 archive-linux-amd64 archive-linux-arm64 archive-linux-raspberry-arm
+
+release: archive-all
+	@test -n "$(VERSION)" || (echo "Could not read version from package.json" && exit 1)
+	@$(GH) release view "$(TAG)" >/dev/null 2>&1 && (echo "GitHub release $(TAG) already exists" && exit 1) || true
+	$(GH) release create "$(TAG)" \
+		"$(OUT_DIR)/$(APP_NAME)-mac-amd64.zip" \
+		"$(OUT_DIR)/$(APP_NAME)-mac-arm64.zip" \
+		"$(OUT_DIR)/$(APP_NAME)-win-amd64.zip" \
+		"$(OUT_DIR)/$(APP_NAME)-win-arm64.zip" \
+		"$(OUT_DIR)/$(APP_NAME)-linux-amd64.tar.gz" \
+		"$(OUT_DIR)/$(APP_NAME)-linux-arm64.tar.gz" \
+		"$(OUT_DIR)/$(APP_NAME)-linux-raspberry-arm.tar.gz" \
+		--title "$(RELEASE_TITLE)" \
+		--notes-file "$(RELEASE_NOTES)"
 
 clean:
 	rm -rf release
